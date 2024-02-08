@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "customer-analysis"
+name = "retail-customer-analysis"
 version = "0.1.0"
 description = "The project is about performing various customer analytics"
 authors = ["Udit Kumar Chatterjee <quantumudit@gmail.com>"]
