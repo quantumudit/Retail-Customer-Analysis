@@ -47,13 +47,15 @@ class DataPreprocessor:
                 if file.endswith(".csv"):
                     csv_filepath = join(self.interim_dir, file)
                     df = pd.read_csv(
-                        csv_filepath, header=0, encoding="utf-8",
-                        parse_dates=["InvoiceDate"])
+                        csv_filepath,
+                        header=0,
+                        encoding="utf-8",
+                        parse_dates=["InvoiceDate"],
+                    )
                     dataframes.append(df)
 
             # Consolidate dataframes
-            logger.info(
-                "Combining all CSV files to create a consolidate dataframe")
+            logger.info("Combining all CSV files to create a consolidate dataframe")
             consolidated_df = pd.concat(dataframes, ignore_index=True, axis=0)
             return consolidated_df
         except Exception as e:
@@ -87,31 +89,40 @@ class DataPreprocessor:
         # Fix datatype of columns
         df = df.astype(
             {
-                'Invoice': 'int32',
-                'Customer ID': 'int32',
-                'StockCode': 'string',
-                'Description': 'string',
-                'Country': 'string',
-                'invoice_date': 'datetime64[ns]'
-            })
+                "Invoice": "int32",
+                "Customer ID": "int32",
+                "StockCode": "string",
+                "Description": "string",
+                "Country": "string",
+                "invoice_date": "datetime64[ns]",
+            }
+        )
 
         # Rename columns
         df = df.rename(
             columns={
-                'Invoice': 'invoice_no',
-                'StockCode': 'stock_code',
-                'Description': 'description',
-                'Quantity': 'quantity',
-                'Price': 'price',
-                'Customer ID': 'customer_id',
-                'Country': 'country'
-            })
+                "Invoice": "invoice_no",
+                "StockCode": "stock_code",
+                "Description": "description",
+                "Quantity": "quantity",
+                "Price": "price",
+                "Customer ID": "customer_id",
+                "Country": "country",
+            }
+        )
 
         # Rearranged columns
         rearranged_col_list = [
-            'invoice_no', 'stock_code', 'customer_id',
-            'invoice_date', 'invoice_time', 'description',
-            'country', 'quantity', 'price']
+            "invoice_no",
+            "stock_code",
+            "customer_id",
+            "invoice_date",
+            "invoice_time",
+            "description",
+            "country",
+            "quantity",
+            "price",
+        ]
 
         df = df.reindex(rearranged_col_list, axis="columns")
 
@@ -122,15 +133,22 @@ class DataPreprocessor:
         analysis_df = clean_df.copy(deep=True)
 
         # Create "sales_amount" column
-        analysis_df["sales_amount"] = round(analysis_df["price"] *
-                                            analysis_df["quantity"], 2)
+        analysis_df["sales_amount"] = round(
+            analysis_df["price"] * analysis_df["quantity"], 2
+        )
 
         # Keep rows where sales_amount is greater than zero
         analysis_df = analysis_df[analysis_df["sales_amount"] > 0]
 
         # Keep required columns only
-        analysis_cols = ['invoice_no', 'customer_id',
-                         'invoice_date', 'country', 'quantity', 'sales_amount']
+        analysis_cols = [
+            "invoice_no",
+            "customer_id",
+            "invoice_date",
+            "country",
+            "quantity",
+            "sales_amount",
+        ]
         analysis_df = analysis_df[analysis_cols]
 
         # Reset index on analysis dataset
@@ -145,8 +163,7 @@ class DataPreprocessor:
             CustomException: _description_
         """
         # Create directory if not exist
-        create_directories(
-            [dirname(self.processed_path), dirname(self.final_path)])
+        create_directories([dirname(self.processed_path), dirname(self.final_path)])
 
         # Combine the dataframes
         combined_df = self.combine_data()
@@ -156,12 +173,11 @@ class DataPreprocessor:
             clean_df, final_df = self.clean_data(combined_df)
 
             # Save dataframes as CSV files
-            logger.info(
-                "Saving the clean and transformed datasets as CSV files")
-            clean_df.to_csv(self.processed_path, index=False,
-                            encoding="utf-8", header=True)
-            final_df.to_csv(self.final_path, index=False,
-                            encoding="utf-8", header=True)
+            logger.info("Saving the clean and transformed datasets as CSV files")
+            clean_df.to_csv(
+                self.processed_path, index=False, encoding="utf-8", header=True
+            )
+            final_df.to_csv(self.final_path, index=False, encoding="utf-8", header=True)
         except Exception as e:
             logger.error(CustomException(e))
             raise CustomException(e) from e

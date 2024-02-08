@@ -55,15 +55,17 @@ class DataIngestion:
 
                 # Download and save the data
                 logger.info("File download started")
-                with httpx.stream("GET", self.data_url, headers=headers,
-                                  timeout=self.timeout) as response:
+                with httpx.stream(
+                    "GET", self.data_url, headers=headers, timeout=self.timeout
+                ) as response:
                     with open(self.external_filepath, "wb") as file:
                         for chunk in response.iter_bytes():
                             file.write(chunk)
                 logger.info("File downloaded successfully")
             else:
-                logger.info("The %s already exists. Skipping download",
-                            self.external_filepath)
+                logger.info(
+                    "The %s already exists. Skipping download", self.external_filepath
+                )
         except Exception as e:
             logger.error(CustomException(e))
             raise CustomException(e) from e
@@ -81,7 +83,8 @@ class DataIngestion:
             # Unzip the file
             logger.info("Unzipping the downloaded file")
             unzipped_files = unzip_file(
-                zipfile_path=self.external_filepath, unzip_dir=self.raw_dir)
+                zipfile_path=self.external_filepath, unzip_dir=self.raw_dir
+            )
             excel_file = [
                 file for file in unzipped_files if file.endswith(".xlsx")][0]
             logger.info("File unzipped. Excel file saved at: %s", excel_file)
@@ -100,8 +103,7 @@ class DataIngestion:
 
                 worksheet = workbook[sheet_name]
 
-                with open(csv_filepath, "w", newline="",
-                          encoding="utf-8") as cf:
+                with open(csv_filepath, "w", newline="", encoding="utf-8") as cf:
                     writer = csv.writer(cf)
                     for row in worksheet.iter_rows(values_only=True):
                         writer.writerow(row)
