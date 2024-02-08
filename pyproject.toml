@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "customer-analysis"
+version = "0.1.0"
+description = "The project is about performing various customer analytics"
+authors = ["Udit Kumar Chatterjee <quantumudit@gmail.com>"]
+license = "NC-SA"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+ucimlrepo = "^0.0.3"
+numpy = "^1.26.4"
+pandas = "^2.2.0"
+matplotlib = "^3.8.2"
+seaborn = "^0.13.2"
+python-box = "^7.1.1"
+pyyaml = "^6.0.1"
+httpx = "^0.26.0"
+openpyxl = "^3.1.2"
+pyarrow = "^15.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.1.1"
+ipykernel = "^6.29.0"
+pre-commit = "^3.6.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

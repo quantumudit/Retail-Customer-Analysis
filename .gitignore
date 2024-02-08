@@ -1,0 +1,42 @@
+# Important Ignores #
+# ================= #
+
+# Environments
+.env
+.venv
+.venv/
+
+# VS Code Settings
+.vscode/
+
+# Directories & Files to ignore
+research/
+info.txt
+logs/
+
+# Power BI extensions
+*.pbix
+*.pbit
+
+# Ignore code spell extension JSON
+cspell.json
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json

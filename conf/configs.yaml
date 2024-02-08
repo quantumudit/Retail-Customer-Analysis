@@ -1,0 +1,16 @@
+data_ingestion:
+  data_url: https://archive.ics.uci.edu/static/public/502/online+retail+ii.zip
+  user_agent: Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+  timeout: 100
+  download_status: False
+  external_path: data/external/online_retail_ii.zip
+  raw_dir: data/raw/
+  interim_dir: data/interim/
+
+data_validation:
+  interim_dir: data/interim/
+
+data_preprocessor:
+  interim_dir: data/interim/
+  processed_path: data/processed/online_retail_data.csv
+  final_path: data/final/online_retail.csv
