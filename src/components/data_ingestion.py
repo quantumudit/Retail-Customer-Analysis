@@ -50,8 +50,7 @@ class DataIngestion:
                 create_directories([dirname(self.external_filepath)])
 
                 # Construct header
-                headers = {"User-Agent": self.user_agent,
-                           "accept-language": "en-US"}
+                headers = {"User-Agent": self.user_agent, "accept-language": "en-US"}
 
                 # Download and save the data
                 logger.info("File download started")
@@ -85,8 +84,7 @@ class DataIngestion:
             unzipped_files = unzip_file(
                 zipfile_path=self.external_filepath, unzip_dir=self.raw_dir
             )
-            excel_file = [
-                file for file in unzipped_files if file.endswith(".xlsx")][0]
+            excel_file = [file for file in unzipped_files if file.endswith(".xlsx")][0]
             logger.info("File unzipped. Excel file saved at: %s", excel_file)
 
             # Load excel file & extract sheet names
