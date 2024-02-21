@@ -2,6 +2,7 @@
 summary
 """
 
+
 from src.exception import CustomException
 from src.logger import logger
 from src.pipelines.stage_01_data_ingestion import DataIngestionPipeline
